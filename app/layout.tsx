@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import './globals.css'
 import Header from '@/components/layout/Header'
 import { GameStateProvider } from '@/context/GameStateContext'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
   title: 'Newsified — Gamified News Intelligence',
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </Suspense>
           </main>
         </GameStateProvider>
+        <Analytics />
       </body>
     </html>
   )
