@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   }
 
   const quiz = await generateQuiz(article)
-  await setCachedQuiz(article.id, quiz)
+  setCachedQuiz(article.id, quiz) // fire and forget
 
   return NextResponse.json({ quiz, cached: false })
 }
