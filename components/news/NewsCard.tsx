@@ -1,0 +1,79 @@
+'use client'
+import Link from 'next/link'
+import Image from 'next/image'
+import { Clock } from 'lucide-react'
+import { NormalizedArticle } from '@/lib/types'
+import { TOPIC_MAP } from '@/lib/constants/topics'
+import SourceChip from './SourceChip'
+import clsx from 'clsx'
+
+interface Props {
+  article: NormalizedArticle
+}
+
+function timeAgo(dateStr: string): string {
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const h = Math.floor(diff / 3600000)
+  const m = Math.floor(diff / 60000)
+  if (h >= 24) return `${Math.floor(h / 24)}d ago`
+  if (h >= 1) return `${h}h ago`
+  return `${m}m ago`
+}
+
+export default function NewsCard({ article }: Props) {
+  const topic = TOPIC_MAP[article.topic]
+
+  const handleClick = () => {
+    sessionStorage.setItem(`article_${article.id}`, JSON.stringify(article))
+  }
+
+  return (
+    <article className="card-hover group flex flex-col overflow-hidden">
+      {article.imageUrl && (
+        <div className="relative w-full aspect-[16/9] overflow-hidden bg-[var(--bg-secondary)]">
+          <Image
+            src={article.imageUrl}
+            alt={article.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none' }}
+            unoptimized
+          />
+        </div>
+      )}
+
+      <div className="flex flex-col flex-1 p-4 gap-3">
+        <div className="flex items-center justify-between gap-2">
+          <span className={clsx('tag text-white/80', topic?.color ?? 'bg-slate-600')}>
+            {topic?.label ?? 'News'}
+          </span>
+          <div className="flex items-center gap-1 text-[var(--text-muted)] text-xs">
+            <Clock className="w-3 h-3" />
+            {timeAgo(article.publishedAt)}
+          </div>
+        </div>
+
+        <h3 className="text-sm font-semibold leading-snug text-[var(--text-primary)] line-clamp-3 group-hover:text-[var(--accent-gold)] transition-colors">
+          {article.title}
+        </h3>
+
+        {article.description && (
+          <p className="text-xs text-[var(--text-secondary)] line-clamp-2 leading-relaxed">
+            {article.description}
+          </p>
+        )}
+
+        <div className="flex items-center justify-between gap-2 mt-auto pt-2 border-t border-[var(--border)]">
+          <SourceChip source={article.source} apiSource={article.apiSource} />
+          <Link
+            href={`/article/${article.id}`}
+            className="text-xs font-medium text-[var(--accent-gold)] hover:underline"
+            onClick={handleClick}
+          >
+            Read + Quiz →
+          </Link>
+        </div>
+      </div>
+    </article>
+  )
+}
