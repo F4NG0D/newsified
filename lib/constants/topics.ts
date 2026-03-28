@@ -70,5 +70,5 @@ export const TOPIC_MAP = Object.fromEntries(
   TOPICS.map(t => [t.slug, t])
 ) as Record<TopicSlug, Topic>
 
-export const getTopicBySlug = (slug: string): Topic =>
-  TOPIC_MAP[slug as TopicSlug] ?? TOPIC_MAP['all']
+export const getTopicBySlug = (slug: string): Topic | undefined =>
+  TOPIC_MAP[slug as TopicSlug]

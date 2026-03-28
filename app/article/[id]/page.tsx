@@ -7,15 +7,7 @@ import { Brain, ExternalLink, ArrowLeft, Clock } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { TOPIC_MAP } from '@/lib/constants/topics'
-
-function timeAgo(dateStr: string): string {
-  const diff = Date.now() - new Date(dateStr).getTime()
-  const h = Math.floor(diff / 3600000)
-  const m = Math.floor(diff / 60000)
-  if (h >= 24) return `${Math.floor(h / 24)}d ago`
-  if (h >= 1) return `${h}h ago`
-  return `${m}m ago`
-}
+import { timeAgo } from '@/lib/utils/time'
 
 export default function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)

@@ -11,7 +11,10 @@ export function useNews(topic: TopicSlug, page = 1) {
     setLoading(true)
     setError(null)
     fetch(`/api/news?topic=${topic}&page=${page}`)
-      .then(r => r.json())
+      .then(r => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`)
+        return r.json()
+      })
       .then(data => {
         setArticles(data.articles ?? [])
         setLoading(false)
