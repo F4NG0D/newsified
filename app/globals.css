@@ -53,7 +53,7 @@
   }
 
   .card-hover {
-    @apply card transition-all duration-200 hover:bg-[var(--bg-card-hover)] hover:border-[#3a3a58] hover:-translate-y-0.5;
+    @apply bg-[var(--bg-card)] border border-[var(--border)] rounded-xl transition-all duration-200 hover:bg-[var(--bg-card-hover)] hover:border-[#3a3a58] hover:-translate-y-0.5;
   }
 
   .tag {
