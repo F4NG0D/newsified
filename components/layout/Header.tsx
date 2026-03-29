@@ -4,6 +4,7 @@ import { Zap, Flame } from 'lucide-react'
 import { useGameState } from '@/hooks/useGameState'
 import { getXPProgress } from '@/lib/gamification/levels'
 import XPToast from '@/components/gamification/XPToast'
+import StockTicker from '@/components/layout/StockTicker'
 
 export default function Header() {
   const { state, pendingXP, clearPendingXP } = useGameState()
@@ -12,15 +13,20 @@ export default function Header() {
   return (
     <>
       <header className="sticky top-0 z-50 bg-[var(--bg-secondary)]/95 backdrop-blur-md border-b border-[var(--border)]">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 h-14 flex items-center justify-between gap-4">
+        <div className="max-w-[1400px] mx-auto px-4 md:px-6 lg:px-8 h-14 flex items-center gap-4">
+          {/* Logo */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
             <div className="w-8 h-8 bg-[var(--accent-gold)] rounded-lg flex items-center justify-center">
               <Zap className="w-4 h-4 text-black" fill="black" />
             </div>
-            <span className="text-lg font-bold tracking-tight">Newsified</span>
+            <span className="text-lg font-bold tracking-tight hidden sm:block">Newsified</span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          {/* Stock ticker — fills center space */}
+          <StockTicker />
+
+          {/* XP / Level / Streak */}
+          <div className="flex items-center gap-3 shrink-0">
             {state.streak > 0 && (
               <div className="flex items-center gap-1 bg-orange-500/10 border border-orange-500/30 rounded-full px-3 py-1">
                 <Flame className="w-3.5 h-3.5 text-[var(--accent-streak)]" fill="currentColor" />
