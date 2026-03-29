@@ -1,13 +1,34 @@
 'use client'
+import { useEffect } from 'react'
 import { X, Swords, Lock } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface Props {
   isOpen: boolean
   onClose: () => void
+  triggerRef?: React.RefObject<HTMLButtonElement | null>
 }
 
-export default function QuestsModal({ isOpen, onClose }: Props) {
+export default function QuestsModal({ isOpen, onClose, triggerRef }: Props) {
+  const handleClose = () => {
+    triggerRef?.current?.focus()
+    onClose()
+  }
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        handleClose()
+      }
+    }
+    if (isOpen) {
+      document.addEventListener('keydown', handleKeyDown)
+    }
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [isOpen])
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -18,7 +39,7 @@ export default function QuestsModal({ isOpen, onClose }: Props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={handleClose}
           />
 
           {/* Modal card */}
@@ -29,6 +50,9 @@ export default function QuestsModal({ isOpen, onClose }: Props) {
             exit={{ opacity: 0 }}
           >
             <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="quests-modal-title"
               className="card p-6 w-full max-w-sm mx-4 pointer-events-auto"
               initial={{ opacity: 0, scale: 0.92 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -37,7 +61,7 @@ export default function QuestsModal({ isOpen, onClose }: Props) {
             >
               {/* Close button */}
               <button
-                onClick={onClose}
+                onClick={handleClose}
                 className="absolute top-4 right-4 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
                 aria-label="Close"
               >
@@ -51,7 +75,7 @@ export default function QuestsModal({ isOpen, onClose }: Props) {
                 </div>
 
                 <div className="text-center">
-                  <h2 className="text-xl font-bold text-[var(--text-primary)]">Quests</h2>
+                  <h2 id="quests-modal-title" className="text-xl font-bold text-[var(--text-primary)]">Quests</h2>
                   <span className="inline-block mt-1 text-[10px] font-semibold uppercase tracking-wider bg-[var(--accent-gold)]/15 text-[var(--accent-gold)] px-2.5 py-0.5 rounded-full">
                     Coming Soon
                   </span>
@@ -89,7 +113,7 @@ export default function QuestsModal({ isOpen, onClose }: Props) {
 
               {/* Got it button */}
               <button
-                onClick={onClose}
+                onClick={handleClose}
                 className="btn-primary w-full py-2.5 rounded-lg text-sm font-semibold"
               >
                 Got it

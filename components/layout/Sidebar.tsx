@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Swords } from 'lucide-react'
 import { useGameState } from '@/hooks/useGameState'
 import LevelBadge from '@/components/gamification/LevelBadge'
@@ -11,6 +11,7 @@ import QuestsModal from '@/components/ui/QuestsModal'
 export default function Sidebar() {
   const { state } = useGameState()
   const [questsOpen, setQuestsOpen] = useState(false)
+  const questsTriggerRef = useRef<HTMLButtonElement>(null)
 
   return (
     <>
@@ -30,6 +31,7 @@ export default function Sidebar() {
 
         <div className="card p-5">
           <button
+            ref={questsTriggerRef}
             onClick={() => setQuestsOpen(true)}
             className="w-full flex items-center gap-3 text-left hover:opacity-80 transition-opacity"
           >
@@ -47,7 +49,7 @@ export default function Sidebar() {
         </div>
       </aside>
 
-      <QuestsModal isOpen={questsOpen} onClose={() => setQuestsOpen(false)} />
+      <QuestsModal isOpen={questsOpen} onClose={() => setQuestsOpen(false)} triggerRef={questsTriggerRef} />
     </>
   )
 }
