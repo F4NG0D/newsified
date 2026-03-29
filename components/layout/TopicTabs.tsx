@@ -67,7 +67,6 @@ export default function TopicTabs() {
 
   const onMouseUp = () => {
     isDragging.current = false
-    didDrag.current = false
     if (scrollRef.current) {
       scrollRef.current.style.cursor = 'grab'
       scrollRef.current.style.userSelect = ''
