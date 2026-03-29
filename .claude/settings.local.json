@@ -15,7 +15,8 @@
       "Bash(grep -rn \"sessionStorage\\\\|localStorage\" . --include=*.tsx --include=*.ts)",
       "Bash(grep -rn \"JSON.parse\\\\|JSON.stringify\" . --include=*.tsx --include=*.ts)",
       "Bash(grep -rn \"res.ok\\\\|!res.ok\\\\|response.ok\" . --include=*.ts)",
-      "Bash(grep -rn \"vercel.json\\\\|VERCEL\\\\|runtime\\\\|edge\" . --include=*.ts --include=*.json)"
+      "Bash(grep -rn \"vercel.json\\\\|VERCEL\\\\|runtime\\\\|edge\" . --include=*.ts --include=*.json)",
+      "WebSearch"
     ]
   }
 }
