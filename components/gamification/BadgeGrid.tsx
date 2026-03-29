@@ -17,15 +17,18 @@ export default function BadgeGrid({ earnedBadgeIds }: Props) {
           return (
             <div
               key={badge.id}
-              title={`${badge.name}: ${badge.description}`}
+              title={badge.description}
               className={clsx(
-                'aspect-square rounded-xl flex items-center justify-center text-xl cursor-help transition-all',
+                'flex flex-col items-center gap-1 p-1.5 rounded-xl border transition-all cursor-help',
                 earned
-                  ? 'bg-[var(--accent-gold)]/10 border border-[var(--accent-gold)]/30 shadow-lg shadow-yellow-500/10'
-                  : 'bg-[var(--bg-secondary)] border border-[var(--border)] opacity-30 grayscale'
+                  ? 'bg-[var(--accent-gold)]/10 border-[var(--accent-gold)]/30 shadow-lg shadow-yellow-500/10'
+                  : 'bg-[var(--bg-secondary)] border-[var(--border)] opacity-40 grayscale'
               )}
             >
-              {badge.icon}
+              <span className="text-lg leading-none">{badge.icon}</span>
+              <span className="text-[9px] font-medium text-center leading-tight text-[var(--text-muted)] line-clamp-2">
+                {badge.name}
+              </span>
             </div>
           )
         })}
