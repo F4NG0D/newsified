@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Clock } from 'lucide-react'
+import { Clock, ArrowRight } from 'lucide-react'
 import { NormalizedArticle } from '@/lib/types'
 import { TOPIC_MAP } from '@/lib/constants/topics'
 import SourceChip from './SourceChip'
@@ -20,7 +20,11 @@ export default function NewsCard({ article }: Props) {
   }
 
   return (
-    <article className="card-hover group flex flex-col overflow-hidden">
+    <Link
+      href={`/article/${article.id}`}
+      onClick={handleClick}
+      className="card-hover group flex flex-col overflow-hidden cursor-pointer"
+    >
       {article.imageUrl && (
         <div className="relative w-full aspect-[16/9] overflow-hidden bg-[var(--bg-secondary)]">
           <Image
@@ -57,15 +61,11 @@ export default function NewsCard({ article }: Props) {
 
         <div className="flex items-center justify-between gap-2 mt-auto pt-2 border-t border-[var(--border)]">
           <SourceChip source={article.source} apiSource={article.apiSource} />
-          <Link
-            href={`/article/${article.id}`}
-            className="text-xs font-medium text-[var(--accent-gold)] hover:underline"
-            onClick={handleClick}
-          >
-            Read + Quiz →
-          </Link>
+          <span className="flex items-center gap-1 text-xs font-medium text-[var(--accent-gold)] group-hover:gap-2 transition-all">
+            Read + Quiz <ArrowRight className="w-3 h-3" />
+          </span>
         </div>
       </div>
-    </article>
+    </Link>
   )
 }
